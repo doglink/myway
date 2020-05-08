@@ -16,7 +16,7 @@
     src: url("https://doglink.github.io/myway.github.io/NeueMachina-Light.otf") format("opentype");
 }
 
-.wrapper {
+h1, p, a {
     font-family: 'NeueMachina', sans-serif;
     width: 80%;
     max-width: 1200px;
