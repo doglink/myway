@@ -1,5 +1,5 @@
 /* PrismJS 1.20.0
-https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript+http+json */
+https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript+actionscript */
 var _self = (typeof window !== 'undefined')
 	? window   // if in browser
 	: (
@@ -1019,101 +1019,19 @@ if (Prism.languages.markup) {
 
 Prism.languages.js = Prism.languages.javascript;
 
-(function (Prism) {
-	Prism.languages.http = {
-		'request-line': {
-			pattern: /^(?:POST|GET|PUT|DELETE|OPTIONS|PATCH|TRACE|CONNECT)\s(?:https?:\/\/|\/)\S+\sHTTP\/[0-9.]+/m,
-			inside: {
-				// HTTP Verb
-				'property': /^(?:POST|GET|PUT|DELETE|OPTIONS|PATCH|TRACE|CONNECT)\b/,
-				// Path or query argument
-				'attr-name': /:\w+/
-			}
-		},
-		'response-status': {
-			pattern: /^HTTP\/1.[01] \d+.*/m,
-			inside: {
-				// Status, e.g. 200 OK
-				'property': {
-					pattern: /(^HTTP\/1.[01] )\d+.*/i,
-					lookbehind: true
-				}
-			}
-		},
-		// HTTP header name
-		'header-name': {
-			pattern: /^[\w-]+:(?=.)/m,
-			alias: 'keyword'
+Prism.languages.actionscript = Prism.languages.extend('javascript',  {
+	'keyword': /\b(?:as|break|case|catch|class|const|default|delete|do|else|extends|finally|for|function|if|implements|import|in|instanceof|interface|internal|is|native|new|null|package|private|protected|public|return|super|switch|this|throw|try|typeof|use|var|void|while|with|dynamic|each|final|get|include|namespace|native|override|set|static)\b/,
+	'operator': /\+\+|--|(?:[+\-*\/%^]|&&?|\|\|?|<<?|>>?>?|[!=]=?)=?|[~?@]/
+});
+Prism.languages.actionscript['class-name'].alias = 'function';
+
+if (Prism.languages.markup) {
+	Prism.languages.insertBefore('actionscript', 'string', {
+		'xml': {
+			pattern: /(^|[^.])<\/?\w+(?:\s+[^\s>\/=]+=("|')(?:\\[\s\S]|(?!\2)[^\\])*\2)*\s*\/?>/,
+			lookbehind: true,
+			inside: Prism.languages.markup
 		}
-	};
-
-	// Create a mapping of Content-Type headers to language definitions
-	var langs = Prism.languages;
-	var httpLanguages = {
-		'application/javascript': langs.javascript,
-		'application/json': langs.json || langs.javascript,
-		'application/xml': langs.xml,
-		'text/xml': langs.xml,
-		'text/html': langs.html,
-		'text/css': langs.css
-	};
-
-	// Declare which types can also be suffixes
-	var suffixTypes = {
-		'application/json': true,
-		'application/xml': true
-	};
-
-	/**
-	 * Returns a pattern for the given content type which matches it and any type which has it as a suffix.
-	 *
-	 * @param {string} contentType
-	 * @returns {string}
-	 */
-	function getSuffixPattern(contentType) {
-		var suffix = contentType.replace(/^[a-z]+\//, '');
-		var suffixPattern = '\\w+/(?:[\\w.-]+\\+)+' + suffix + '(?![+\\w.-])';
-		return '(?:' + contentType + '|' + suffixPattern + ')';
-	}
-
-	// Insert each content type parser that has its associated language
-	// currently loaded.
-	var options;
-	for (var contentType in httpLanguages) {
-		if (httpLanguages[contentType]) {
-			options = options || {};
-
-			var pattern = suffixTypes[contentType] ? getSuffixPattern(contentType) : contentType;
-			options[contentType.replace(/\//g, '-')] = {
-				pattern: RegExp('(content-type:\\s*' + pattern + '[\\s\\S]*?)(?:\\r?\\n|\\r){2}[\\s\\S]*', 'i'),
-				lookbehind: true,
-				inside: httpLanguages[contentType]
-			};
-		}
-	}
-	if (options) {
-		Prism.languages.insertBefore('http', 'header-name', options);
-	}
-
-}(Prism));
-
-Prism.languages.json = {
-	'property': {
-		pattern: /"(?:\\.|[^\\"\r\n])*"(?=\s*:)/,
-		greedy: true
-	},
-	'string': {
-		pattern: /"(?:\\.|[^\\"\r\n])*"(?!\s*:)/,
-		greedy: true
-	},
-	'comment': /\/\/.*|\/\*[\s\S]*?(?:\*\/|$)/,
-	'number': /-?\d+\.?\d*(?:e[+-]?\d+)?/i,
-	'punctuation': /[{}[\],]/,
-	'operator': /:/,
-	'boolean': /\b(?:true|false)\b/,
-	'null': {
-		pattern: /\bnull\b/,
-		alias: 'keyword'
-	}
-};
-
+	});
+}
+;
