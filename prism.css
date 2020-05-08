@@ -1,3 +1,72 @@
+@font-face {
+    font-family: "NeueMachina";
+    font-weight: normal;
+    src: url("https://doglink.github.io/myway.github.io/NeueMachina-Regular.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "NeueMachina";
+    font-weight: bold;
+    src: url("https://doglink.github.io/myway.github.io/NeueMachina-Ultrabold.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "NeueMachina";
+    font-weight: 200;
+    src: url("https://doglink.github.io/myway.github.io/NeueMachina-Light.otf") format("opentype");
+}
+
+.wrapper {
+    font-family: 'NeueMachina', sans-serif;
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    line-height: 1.8;
+    color: black;
+}
+
+*::selection {
+    background: #ffdb3a;
+}
+
+.recap {
+    border: 5px #0000FF solid;
+    padding: 0 20px 20px 20px;
+    color: #0000FF;
+    margin-bottom: 100px;
+}
+
+.recap h1 {
+    margin-left: 20px;
+    font-size: 50px;
+    line-height: 1;
+}
+
+h1:not(:first-child) {
+    margin-top: 50px;
+}
+
+a {
+    color: inherit;
+}
+
+li:not(first-child) {
+    margin-top:1em;
+}
+
+.callout {
+        border-left: 5px solid #0000ff;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        padding-left: 1.5rem;
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+}
+
+.key {
+    border: 1px solid black;
+}
+
 code[class*="language-"],
 pre[class*="language-"] {
 	color: black;
